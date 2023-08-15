@@ -11,27 +11,34 @@ def connect():
 
         # connect to the PostgreSQL server
         print('Connecting to the PostgreSQL database...')
+        # ** operador de desempaquetado del diccionario para asignar cada 
+        # clave-valor con los parámetros de conexión.
         conn = psycopg2.connect(**params)
 		
-        # create a cursor
+        # creación del cursor para ejecutar query de sql
         cur = conn.cursor()
         
 	# execute a statement
         print('PostgreSQL database version:')
         cur.execute('SELECT version()')
 
+   #     consulta = input("Ingrese id a consultar: ")
+   #     cur.execute("SELECT * FROM usuarios WHERE id = %s", (consulta,))
+
         # display the PostgreSQL database server version
         db_version = cur.fetchone()
         print(db_version)
        
+        return conn
+
 	# close the communication with the PostgreSQL
         cur.close()
     except (Exception, psycopg2.DatabaseError) as error:
         print(error)
-    finally:
-        if conn is not None:
-            conn.close()
-            print('Database connection closed.')
+    #finally:
+    #    if conn is not None:
+    #        conn.close()
+    #        print('Database connection closed.')
 
 
 if __name__ == '__main__':
